@@ -36,6 +36,7 @@ import java.util.Collection;
  *
  * Here is the list of those methods :
  * 	- getOnlinePlayers()
+ * 	- getPlayer(String name)
  * 	- getItemInHand()
  * 	- getItemInMainHand()
  * 	- getItemInOffHand()
@@ -66,10 +67,27 @@ public class PlayerUtil
 	}
 
 	/**
+	 * Gets a player from name.
+	 *
+	 * @param name the player name
+	 * @return the player corresponding to the name.
+	 */
+	public static Player getPlayer(String name)
+	{
+		for(Player player : getOnlinePlayers())
+		{
+			if(player.getName().equals(name))
+				return player;
+		}
+		return null;
+	}
+
+	/**
 	 * getItemInHand has been deprecated in Minecraft 1.9.
 	 *
 	 * With this implementation of getItemInHand(), it preserve from using deprecated method.
 	 *
+	 * @param player the player
 	 * @return the ItemStack in hand.
 	 */
 	public static ItemStack getItemInHand(Player player)
@@ -85,6 +103,7 @@ public class PlayerUtil
 	 *
 	 * With this implementation of getItemInMainHand(), it insure compatibility with previous version.
 	 *
+	 * @param player the player
 	 * @return the ItemStack in main hand.
 	 */
 	public static ItemStack getItemInMainHand(Player player)
@@ -100,6 +119,7 @@ public class PlayerUtil
 	 *
 	 * With this implementation of getItemInOffHand(), it insure compatibility with previous version.
 	 *
+	 * @param player the player
 	 * @return the ItemStack in off hand for Minecraft 1.9 and higher or null for Minecraft prior 1.9.
 	 */
 	public static ItemStack getItemInOffHand(Player player)
