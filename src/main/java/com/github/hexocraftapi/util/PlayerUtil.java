@@ -16,10 +16,12 @@ package com.github.hexocraftapi.util;
  * limitations under the License.
  */
 
+import com.github.hexocraftapi.reflection.minecraft.Minecraft;
 import com.github.hexocraftapi.reflection.util.MethodUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -28,9 +30,21 @@ import java.util.Collection;
 /**
  * @author <b>Hexosse</b> (<a href="https://github.com/hexosse">on GitHub</a>))
  */
+
+/**
+ * PlayerUtil is a compilation of useful method to insure compatibility with different version of Minecraft .
+ *
+ * Here is the list of those methods :
+ * 	- getOnlinePlayers()
+ * 	- getItemInHand()
+ * 	- getItemInMainHand()
+ * 	- getItemInOffHand()
+ *
+ */
+
+@SuppressWarnings("unused")
 public class PlayerUtil
 {
-
 	/**
 	 * Gets a view of all currently logged in players.
 	 *
@@ -50,4 +64,50 @@ public class PlayerUtil
 		}
 		catch(Exception ignored) { return null; }
 	}
+
+	/**
+	 * getItemInHand has been deprecated in Minecraft 1.9.
+	 *
+	 * With this implementation of getItemInHand(), it preserve from using deprecated method.
+	 *
+	 * @return the ItemStack in hand.
+	 */
+	public static ItemStack getItemInHand(Player player)
+	{
+		if(Minecraft.Version.getVersion().olderThan(Minecraft.Version.v1_9_R1))
+			return player.getInventory().getItemInHand();
+		else
+			return player.getInventory().getItemInMainHand();
+	}
+
+	/**
+	 * getItemInMainHand only appeared in Minecraft 1.9.
+	 *
+	 * With this implementation of getItemInMainHand(), it insure compatibility with previous version.
+	 *
+	 * @return the ItemStack in main hand.
+	 */
+	public static ItemStack getItemInMainHand(Player player)
+	{
+		if(Minecraft.Version.getVersion().olderThan(Minecraft.Version.v1_9_R1))
+			return player.getInventory().getItemInHand();
+		else
+			return player.getInventory().getItemInMainHand();
+	}
+
+	/**
+	 * getItemInOffHand only appeared in Minecraft 1.9.
+	 *
+	 * With this implementation of getItemInOffHand(), it insure compatibility with previous version.
+	 *
+	 * @return the ItemStack in off hand for Minecraft 1.9 and higher or null for Minecraft prior 1.9.
+	 */
+	public static ItemStack getItemInOffHand(Player player)
+	{
+		if(Minecraft.Version.getVersion().olderThan(Minecraft.Version.v1_9_R1))
+			return null;
+		else
+			return player.getInventory().getItemInOffHand();
+	}
+
 }
