@@ -19,13 +19,17 @@ package com.github.hexocraftapi.util;
 import com.github.hexocraftapi.reflection.minecraft.Minecraft;
 import com.github.hexocraftapi.reflection.util.MethodUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Server;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author <b>Hexosse</b> (<a href="https://github.com/hexosse">on GitHub</a>))
@@ -128,6 +132,29 @@ public class PlayerUtil
 			return null;
 		else
 			return player.getInventory().getItemInOffHand();
+	}
+
+	/**
+	 * Put the ItemStack into player inventory
+	 * If the inventory is full, then drop the item stack.
+	 *
+	 * @param player
+	 * @param itemStack
+	 */
+	public static void give(Player player, ItemStack itemStack)
+	{
+		if(player==null || itemStack==null) return;
+
+		HashMap<Integer, ItemStack> leftOver = new HashMap<Integer, ItemStack>();
+		leftOver.putAll(player.getInventory().addItem(itemStack));
+		if(!leftOver.isEmpty()) {
+			Location location = player.getLocation();
+			for(Map.Entry<Integer, ItemStack> entry : leftOver.entrySet())
+			{
+				player.getWorld().dropItem(location, entry.getValue());
+				location.getWorld().playSound(location, Sound.ENTITY_ITEM_PICKUP, 1.0f, 1.0f);
+			}
+		}
 	}
 
 }
