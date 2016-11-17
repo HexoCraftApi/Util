@@ -138,8 +138,8 @@ public class PlayerUtil
 	 * Put the ItemStack into player inventory
 	 * If the inventory is full, then drop the item stack.
 	 *
-	 * @param player
-	 * @param itemStack
+	 * @param player the player which will receive the ItemStack
+	 * @param itemStack ItemStack to give to player
 	 */
 	public static void give(Player player, ItemStack itemStack)
 	{
