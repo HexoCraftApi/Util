@@ -26,6 +26,19 @@ import org.bukkit.block.BlockFace;
  */
 public class LocationUtil
 {
+	/**
+	 * Returns a string representing the location
+	 *
+	 * @param location Location represented
+	 * @return Representation of the location
+	 */
+	public static String toReadableString(Location location)
+	{
+		if (location == null) throw new NullPointerException("location");
+
+		return '[' + location.getWorld().getName() + "] " + (int)location.getBlockX() + ", " + (int)location.getBlockY() + ", " + (int)location.getBlockZ();
+	}
+
 	public static boolean equals(Location l1, Location l2)
 	{
 		if (l1 == null) throw new NullPointerException("l1 can not be null");
