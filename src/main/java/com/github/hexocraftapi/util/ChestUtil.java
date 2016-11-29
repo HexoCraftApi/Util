@@ -41,6 +41,7 @@ public class ChestUtil
 		if (material == null) throw new NullPointerException("material cannot be null");
 
 		if (material == Material.CHEST) return true;
+		if (material == Material.TRAPPED_CHEST) return true;
 
 		return false;
 	}
