@@ -16,6 +16,7 @@
 
 package com.github.hexocraftapi.util;
 
+import com.github.hexocraftapi.nms.utils.NmsChestUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -292,5 +293,15 @@ public class ChestUtil
 		}
 
 		return null;
+	}
+
+	public static String getName(Chest chest)
+	{
+		return NmsChestUtil.getName(chest);
+	}
+
+	public static void setName(Chest chest, String name)
+	{
+		NmsChestUtil.setName(chest, name);
 	}
 }
