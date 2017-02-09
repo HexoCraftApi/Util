@@ -26,10 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author <b>Hexosse</b> (<a href="https://github.com/hexosse">on GitHub</a>))
@@ -68,6 +65,26 @@ public class PlayerUtil
 				return Arrays.asList(((Player[]) onlinePlayerMethod.invoke(Bukkit.getServer())));
 		}
 		catch(Exception ignored) { return null; }
+	}
+
+	/**
+	 * Gets a view of all currently logged in OP players.
+	 *
+	 * With this implementation of getOnlinePlayers(), it preserve from crashing your server as org.bukkit.Server.getOnlinePlayers() recently changed.
+	 *
+	 * @return a view of currently online players.
+	 */
+	public static Collection<? extends Player> getOnlineOpPlayers()
+	{
+		List<Player> players = (List<Player>) getOnlinePlayers();
+
+        for (Iterator<Player> iter = players.listIterator(); iter.hasNext(); )
+        {
+            Player player = iter.next();
+            if(!player.isOp())
+                iter.remove();
+        }
+        return players;
 	}
 
 	/**
