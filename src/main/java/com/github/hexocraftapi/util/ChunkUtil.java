@@ -1,5 +1,6 @@
 package com.github.hexocraftapi.util;
 
+import com.google.common.collect.Lists;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 
@@ -12,17 +13,17 @@ import java.util.List;
  */
 public class ChunkUtil
 {
-	public static Collection<? extends Player> getClosePlayers(Chunk chunk, int nbChunk)
+	public static Collection<? extends Player> getClosePlayers(Chunk chunk, final Collection<? extends Player> players, int nbChunk)
 	{
-		List<Player> players = (List<Player>) PlayerUtil.getOnlineOpPlayers();
+		List<Player> closePlayers = Lists.newArrayList(players);
 
-		for (Iterator<Player> iter = players.listIterator(); iter.hasNext(); )
+		for (Iterator<Player> iter = closePlayers.listIterator(); iter.hasNext(); )
 		{
 			Player player = iter.next();
 			if(!isClosePlayer(chunk,player,nbChunk))
 				iter.remove();
 		}
-		return players;
+		return closePlayers;
 	}
 
 	public static boolean isClosePlayer(Chunk chunk, Player player, int nbChunk)
